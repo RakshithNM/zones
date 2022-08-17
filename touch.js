@@ -3,6 +3,15 @@ const sections = document.querySelectorAll('section');
 const mouseInfoElement = document.querySelector('mark[id="yellow"]');
 const touchInfoElement = document.querySelector('mark[id="green"]');
 
+let touchClearTimer = null;
+const ongoingTouches = [];
+const TARGETS = [];
+
+const stillTouching = (inId) => {
+  let isTouching = ongoingTouches.find((touch) => touch.identifier === inId);
+  return isTouching ? true : false;
+}
+
 const hide = (inElement) => {
   inElement.style.display = "none";
 }
@@ -15,11 +24,19 @@ const getTarget = (inElement) => {
   return inElement.closest('section').getAttribute('id') || inElement.getAttribute('id');
 }
 
+const timerToClearTouch = (inTouchId) => {
+  if(touchClearTimer !== null && touchClearTimer !== void 0) {
+    clearTimeout(touchClearTimer);
+  }
+  if(stillTouching(inTouchId) === false) {
+    touchClearTimer = setTimeout(() => {
+      document.getElementById(inTouchId)?.remove();
+    }, 500);
+  }
+}
+
 hide(mouseInfoElement);
 hide(touchInfoElement);
-
-const ongoingTouches = [];
-const TARGETS = [];
 
 const getTouchByIdentifier = (inId) => {
   const touchIdx = ongoingTouches.findIndex((touch) => touch.identifier === inId);
@@ -38,7 +55,6 @@ const mouseDownHandler = (event) => {
 const mouseUpHandler = (event) => {
   event.preventDefault();
   mouseInfoElement.textContent = `MOUSE UP, TARGET: ${getTarget(event.target)}`
-  hide(mouseInfoElement);
 };
 
 const mouseMoveHandler = (event) => {
@@ -54,16 +70,12 @@ const touchStartHandler = (event) => {
     ongoingTouches.push(touch);
     const touchPointer = document.createElement('div');
     touchPointer.id = `nui-${touch.identifier}`;
-    touchPointer.style.width = '50px';
-    touchPointer.style.height = '50px';
-    touchPointer.style.background = 'red';
-    touchPointer.style.position = 'absolute';
-    touchPointer.style.borderRadius = '50%';
+    touchPointer.classList.add('touch');
     touchPointer.style.left = `${touch.pageX - 50}px`;
     touchPointer.style.top = `${touch.pageY - 50}px`;
     zones.prepend(touchPointer);
   }
-  TARGETS.push(event.target.getAttribute('name'));
+  TARGETS.push(`${getTarget(event.target)} : ${event.target.getAttribute('name')}`);
   touchInfoElement.textContent = `TOUCH COUNT: ${ongoingTouches.length}, TOUCH TARGET: ${TARGETS.join("")}`;
   show(touchInfoElement);
 };
@@ -77,6 +89,7 @@ const touchEndHandler = (event) => {
 
     }
     touchInfoElement.textContent = `${ongoingTouches.length}`;
+    timerToClearTouch(`nui-${touch.identifier}`);
   }
 
   TARGETS.splice(TARGETS.findIndex((target) => target === event.target.getAttribute('name')), 1);

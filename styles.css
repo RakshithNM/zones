@@ -15,6 +15,7 @@ body {
   grid-template-columns: 1fr min(80ch, calc(100% - 16px)) 1fr;
   grid-column-gap: 8px;
   place-items: center;
+  height: 100vh;
 }
 
 .parent > * {
@@ -74,6 +75,7 @@ dialog > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 90%;
+  gap: var(--size-2);
 }
 
 dialog > div > * {
@@ -92,6 +94,10 @@ dialog > div > * {
   background: var(--green-7);
 }
 
+section {
+  border-radius: var(--radius-3);
+}
+
 #zone1 {
   background-image: var(--gradient-7);
 }
@@ -106,6 +112,25 @@ dialog > div > * {
 
 #zone4 {
   background-image: var(--gradient-20);
+}
+
+.touch {
+  background-color: transparent;
+  border: 5px dotted var(--green-8);
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 ::backdrop {

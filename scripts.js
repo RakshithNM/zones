@@ -1,24 +1,22 @@
-console.log('any scripts in host');
+const zoneBtn = document.getElementById('zone-btn');
+const zoneDlg = document.getElementById('zone-dlg');
 
-const pollBtn = document.getElementById('poll-btn');
-const pollDlg = document.getElementById('poll-dlg');
-
-if (typeof pollDlg.showModal !== 'function') {
-  pollDlg.hidden = true;
+if (typeof zoneDlg.showModal !== 'function') {
+  zoneDlg.hidden = true;
 }
 
-pollBtn.addEventListener('click', () => {
-  if (typeof pollDlg.showModal === "function") {
-    pollDlg.showModal();
+zoneBtn.addEventListener('click', () => {
+  if (typeof zoneDlg.showModal === "function") {
+    zoneDlg.showModal();
   } else {
     document.body.style = "background: red";
   }
 });
 
-pollDlg.addEventListener('click', function (event) {
-  const rect = pollDlg.getBoundingClientRect();
+zoneDlg.addEventListener('click', function (event) {
+  const rect = zoneDlg.getBoundingClientRect();
   const isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
   if(isInDialog === false) {
-    pollDlg.close();
+    zoneDlg.close();
   }
 });
