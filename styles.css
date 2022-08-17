@@ -107,3 +107,8 @@ dialog > div > * {
 #zone4 {
   background-image: var(--gradient-20);
 }
+
+::backdrop {
+  pointer-events: none;
+  cursor: not-allowed;
+}

@@ -1,6 +1,22 @@
 const zones = document.querySelector('dialog');
-const eventNameElement = document.querySelector('mark[id="yellow"]');
+const sections = document.querySelectorAll('section');
+const mouseInfoElement = document.querySelector('mark[id="yellow"]');
 const touchInfoElement = document.querySelector('mark[id="green"]');
+
+const hide = (inElement) => {
+  inElement.style.display = "none";
+}
+
+const show = (inElement) => {
+  inElement.style.display = "block";
+}
+
+const getTarget = (inElement) => {
+  return inElement.closest('section').getAttribute('id') || inElement.getAttribute('id');
+}
+
+hide(mouseInfoElement);
+hide(touchInfoElement);
 
 const ongoingTouches = [];
 const TARGETS = [];
@@ -14,13 +30,21 @@ const getTouchByIdentifier = (inId) => {
 }
 
 const mouseDownHandler = (event) => {
-  eventNameElement.textContent = "MOUSE DOWN";
+  event.preventDefault();
+  mouseInfoElement.textContent = `MOUSE DOWN, TARGET: ${getTarget(event.target)}`
+  show(mouseInfoElement);
 };
-const mouseUpHandler = () => {
-  eventNameElement.textContent = "MOUSE UP";
+
+const mouseUpHandler = (event) => {
+  event.preventDefault();
+  mouseInfoElement.textContent = `MOUSE UP, TARGET: ${getTarget(event.target)}`
+  hide(mouseInfoElement);
 };
-const mouseMoveHandler = () => {
-  eventNameElement.textContent = "MOUSE UP";
+
+const mouseMoveHandler = (event) => {
+  event.preventDefault();
+  mouseInfoElement.textContent = `MOUSE MOVE, TARGET: ${getTarget(event.target)}`
+  show(mouseInfoElement);
 };
 
 const touchStartHandler = (event) => {
@@ -41,6 +65,7 @@ const touchStartHandler = (event) => {
   }
   TARGETS.push(event.target.getAttribute('name'));
   touchInfoElement.textContent = `TOUCH COUNT: ${ongoingTouches.length}, TOUCH TARGET: ${TARGETS.join("")}`;
+  show(touchInfoElement);
 };
 
 const touchEndHandler = (event) => {
@@ -77,10 +102,12 @@ const touchMoveHandler = (event) => {
   touchInfoElement.textContent = `TOUCH COUNT: ${ongoingTouches.length}, TOUCH TARGET: ${TARGETS.join("")}`;
 };
 
-zones.addEventListener('mousedown', mouseDownHandler);
-zones.addEventListener('mouseup', mouseUpHandler);
-zones.addEventListener('mousemove', mouseMoveHandler);
-zones.addEventListener('touchstart', touchStartHandler);
-zones.addEventListener('touchend', touchEndHandler);
-zones.addEventListener('touchcancel', touchCancelHandler);
-zones.addEventListener('touchmove', touchMoveHandler);
+for(const section of sections) {
+  section.addEventListener('mousedown', mouseDownHandler, true);
+  section.addEventListener('mouseup', mouseUpHandler, true);
+  section.addEventListener('mousemove', mouseMoveHandler, true);
+  section.addEventListener('touchstart', touchStartHandler, true);
+  section.addEventListener('touchend', touchEndHandler, true);
+  section.addEventListener('touchcancel', touchCancelHandler, true);
+  section.addEventListener('touchmove', touchMoveHandler, true);
+}
