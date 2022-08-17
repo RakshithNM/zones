@@ -8,9 +8,10 @@ productTitlePrimaryTemplate.innerHTML = `
     font-size: var(--size-5);
     background-image: var(--indigo-9);
     padding: var(--size-fluid-2);
+    color: var(--gray-0);
   }
 </style>
-<h1>NUITEQ PRODUCT</h1>`;
+<h1 class="primary-title">NUITEQ PRODUCT</h1>`;
 
 
 class NUITEQProductTitle extends HTMLElement {
