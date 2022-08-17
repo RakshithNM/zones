@@ -1,4 +1,3 @@
-console.log("poll title");
 const productTitlePrimaryTemplate = document.createElement('template');
 productTitlePrimaryTemplate.innerHTML = `
 <style>
@@ -24,7 +23,6 @@ class NUITEQProductTitle extends HTMLElement {
 
  connectedCallback(){
    this.h1 = this.getAttribute("content");
-   console.log("this", this.h1);
    this.render();
  }
 
@@ -37,5 +35,3 @@ class NUITEQProductTitle extends HTMLElement {
 if ('customElements' in window) {
 	customElements.define('nuiteq-product-title', NUITEQProductTitle);
 }
-
-console.log("poll title end");

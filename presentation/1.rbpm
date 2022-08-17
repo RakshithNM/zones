@@ -1,0 +1,19 @@
+# NUITEQ ZONES
+
+## GOALS
+
+👹 Attempt to mitigate using iframes and work around the downsides of iframes
+    1. NUITEQ Poll in NUITEQ Stage
+    2. Lessons on NUITEQ Stage
+    3. Lessons on NUITEQ Stage
+
+  DOWNSIDES
+
+    * The code base for lessons integration on stage is on lessons and not on stage.
+    * We need some elements to be hidden for the integration part then we have rely on some tricks to actually do that
+    * The performance of the iframes have been traditionally bad and continues to be so.
+
+  BENEFITS
+
+    * Build one product and just use the URL to integrate it in another product
+

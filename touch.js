@@ -2,8 +2,9 @@ const zones = document.querySelector('dialog');
 const sections = document.querySelectorAll('section');
 const mouseInfoElement = document.querySelector('mark[id="yellow"]');
 const touchInfoElement = document.querySelector('mark[id="green"]');
+const numberOfTouches = 10;
 
-let touchClearTimer = null;
+const touchClearTimer = [...Array(numberOfTouches).keys()].map(() => null);
 const ongoingTouches = [];
 const TARGETS = [];
 
@@ -24,15 +25,15 @@ const getTarget = (inElement) => {
   return inElement.closest('section').getAttribute('id') || inElement.getAttribute('id');
 }
 
-const timerToClearTouch = (inTouchId) => {
-  if(touchClearTimer !== null && touchClearTimer !== void 0) {
-    clearTimeout(touchClearTimer);
+const timerToClearTouch = (inTouchId, inTouchKind) => {
+  const index = inTouchId.split('-')[1];
+  if(touchClearTimer[Number(index)] !== null && touchClearTimer[Number(index)] !== void 0 && inTouchKind === "MOVE") {
+    clearTimeout(touchClearTimer[Number(index)]);
+    touchClearTimer[Number(index)] = null;
   }
-  if(stillTouching(inTouchId) === false) {
-    touchClearTimer = setTimeout(() => {
-      document.getElementById(inTouchId)?.remove();
-    }, 500);
-  }
+  touchClearTimer[Number(index)] = setTimeout(() => {
+    document.getElementById(inTouchId)?.remove();
+  }, 500);
 }
 
 hide(mouseInfoElement);
@@ -81,17 +82,16 @@ const touchStartHandler = (event) => {
 };
 
 const touchEndHandler = (event) => {
+  event.preventDefault();
   const touches = event.changedTouches;
   for(const touch of touches) {
     const touchToContinue = getTouchByIdentifier(touch.identifier);
     if(touchToContinue >= 0) {
       ongoingTouches.splice(touchToContinue, 1);
-
     }
     touchInfoElement.textContent = `${ongoingTouches.length}`;
-    timerToClearTouch(`nui-${touch.identifier}`);
+    timerToClearTouch(`nui-${touch.identifier}`, "END");
   }
-
   TARGETS.splice(TARGETS.findIndex((target) => target === event.target.getAttribute('name')), 1);
   touchInfoElement.textContent = `TOUCH COUNT: ${ongoingTouches.length}, TOUCH TARGET: ${TARGETS.join("")}`;
 };
@@ -111,6 +111,7 @@ const touchMoveHandler = (event) => {
         touchPointer.style.top = `${touch.pageY}`;
       }
     }
+    timerToClearTouch(`nui-${touch.identifier}`, "MOVE");
   }
   touchInfoElement.textContent = `TOUCH COUNT: ${ongoingTouches.length}, TOUCH TARGET: ${TARGETS.join("")}`;
 };

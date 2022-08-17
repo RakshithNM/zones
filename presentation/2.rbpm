@@ -1,0 +1,21 @@
+💻 Build Web Components so we have UI elements that can be used across NUITEQ Products
+
+```html
+  <button></button>
+
+  VS
+
+  <nuiteq-primary-button></nuiteq-primary-button>
+```
+
+WHY?
+  1. As a company it is best, if users are familiar with the NUITEQ Products, so building NUITEQ elements like buttons which a particular color and is across products. If we launch multiple SAAS products and it makes sense for us to have a common design language across products so people get more and more aware of NUITEQ design language.
+
+  2. More defined and refined product development.
+
+  3. Better and easy handover of designs.
+
+  4. Better code quality.
+
+  5. No more missed hover gradient styles on buttons :P
+

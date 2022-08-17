@@ -1,0 +1,42 @@
+🧭 Explore the possiblity of building ZONES on the WEB
+
+If we use component based product development method, it becomes easy to actually build a larger component that is composed of smaller components.
+
+Example: Polls Listing in Snowflake.live
+
+```html
+  <!-- NUITEQ CARD COMPONENT -->
+
+  <nuiteq-card-image></nuiteq-card-image>
+  <nuiteq-primary-card-text></nuiteq-primary-card-text>
+  <nuiteq-primary-card-button></nuiteq-primary-card-button>
+```
+
+```html
+  <!-- NUITEQ POLL LISTING COMPONENT -->
+
+  <nuiteq-card></nuiteq-card>
+  <nuiteq-primary-card-text></nuiteq-primary-card-text>
+  <nuiteq-primary-card-button></nuiteq-primary-card-button>
+```
+
+3. <nuiteq-header></nuiteq-header> , <nuiteq-polls-listing></nuiteq-polls-listing> and <nuiteq-footer></nuiteq-footer> make a page in Snowflake
+
+```html
+  <nuiteq-header></nuiteq-header>
+  <nuiteq-polls-listing></nuiteq-polls-listing>
+  <nuiteq-footer></nuiteq-footer>
+```
+
+Now we have the page built in Snowflake, if we want to build the same page in an iframe in Stage for example, but don't want the <nuiteq-card> to have <nuiteq-primary-card-text> we have to construct the <nuiteq-card> without <nuiteq-primary-card-text> component.
+
+```html
+  <nuiteq-card-image></nuiteq-card-image>
+  <nuiteq-primary-card-button></nuiteq-primary-card-button>
+```
+
+```html
+  <nuiteq-header></nuiteq-header>
+  <nuiteq-polls-listing></nuiteq-polls-listing>
+  <nuiteq-footer></nuiteq-footer>
+```

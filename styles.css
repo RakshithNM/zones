@@ -96,6 +96,7 @@ dialog > div > * {
 
 section {
   border-radius: var(--radius-3);
+  background: fixed;
 }
 
 #zone1 {
@@ -122,6 +123,11 @@ section {
   height: 50px;
   border-radius: 50%;
   animation: rotation 2s infinite linear;
+
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
 }
 
 @keyframes rotation {
@@ -136,4 +142,11 @@ section {
 ::backdrop {
   pointer-events: none;
   cursor: not-allowed;
+}
+
+[inert], [inert] * {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
 }
